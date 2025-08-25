@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Kontaktliste", "01_Kontaktliste", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KontaktApp", "KontaktApp\KontaktApp.csproj", "{081320B8-01FB-4033-8066-0A51CA1D37E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KontaktLib", "KontaktLib\KontaktLib.csproj", "{ABDF2C29-B63D-416F-AD74-EFB7FD578828}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{081320B8-01FB-4033-8066-0A51CA1D37E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081320B8-01FB-4033-8066-0A51CA1D37E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081320B8-01FB-4033-8066-0A51CA1D37E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081320B8-01FB-4033-8066-0A51CA1D37E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABDF2C29-B63D-416F-AD74-EFB7FD578828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABDF2C29-B63D-416F-AD74-EFB7FD578828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABDF2C29-B63D-416F-AD74-EFB7FD578828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABDF2C29-B63D-416F-AD74-EFB7FD578828}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{081320B8-01FB-4033-8066-0A51CA1D37E3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{ABDF2C29-B63D-416F-AD74-EFB7FD578828} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12AB1BA1-ED3A-44A2-8CF8-D6EE6331338A}
+	EndGlobalSection
+EndGlobal
