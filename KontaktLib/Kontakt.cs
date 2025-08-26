@@ -3,6 +3,8 @@ namespace KontaktLib
 {
     public class Kontakt
     {
+        #region Properties
+
         /*
          * Verwendung von Snippets für die properties
          * 
@@ -133,9 +135,50 @@ namespace KontaktLib
             }
         }
 
+        #endregion Properties
 
+        #region Konstruktoren
 
+        // Default Konstruktor wieder einführen, da wir einen
+        // eigenen angepassten Konstruktor erstellt haben gibt es den
+        // default Konstruktor sonst nicht mehr.
+        public Kontakt() { }
 
+        public Kontakt(string name, DateTime geburtsdatum, int geschlecht)
+        {
+            Name = name;
+            Geburtsdatum = geburtsdatum;
+            Geschlecht = geschlecht;
+        }
+
+        #endregion Konstruktoren
+
+        #region Methoden
+
+        public string GeschlechtText()
+        {
+            string geschlechtText = "Unbekannt";
+            switch (Geschlecht) {
+                case 1:
+                    geschlechtText = "Weiblich";
+                    break;
+                case 2:
+                    geschlechtText = "Männlich";
+                    break;
+                case 3:
+                    geschlechtText = "Divers";
+                    break;
+            }
+
+            return geschlechtText;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Geburtsdatum:d}) - {Alter} Jahre, {GeschlechtText()}";
+        }
+
+        #endregion Methoden
     }
 
 }

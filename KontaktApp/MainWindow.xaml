@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KontaktApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Kontakte" Height="450" Width="800">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Background="WhiteSmoke">
+            <Button x:Name="ButtonAdd" Content="Hinzufügen" Margin="10" Padding="5" Click="ButtonAdd_Click"/>
+            <Button x:Name="ButtonRemove" Content="Löschen" Margin="10" Padding="5" Click="ButtonRemove_Click"/>
+            <Separator Margin="10"/>
+            <Button x:Name="ButtonLaden" Content="Laden" Margin="10" Padding="5"/>
+            <Button x:Name="ButtonSpeichern" Content="Speichern" Margin="10" Padding="5"/>
+            <Separator Margin="10"/>
+            <Button x:Name="ButtonReferenz" Content="Referenz" Margin="10" Padding="5" Click="ButtonReferenz_Click"/>
+        </StackPanel>
+        <ListView x:Name="ListViewKontakte"></ListView>
+    </DockPanel>
 </Window>
