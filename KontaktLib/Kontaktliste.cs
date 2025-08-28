@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace KontaktLib
 {
@@ -36,6 +38,98 @@ namespace KontaktLib
             }
 
             Kontakte.RemoveAt(index);
+        }
+
+
+        public int[] StatistikGeschlecht()
+        {
+            int[] anzahlGeschlecht = new int[3];
+
+            foreach (Kontakt kontakt in Kontakte)
+            {
+                // Variante 1: mit Prüfung des Geschlechts switch oder if
+                
+                // entsprechendes Geschlecht hochzählen für
+                // die Statistik
+                switch (kontakt.Geschlecht)
+                {
+                    // weiblich + 1
+                    case 1: anzahlGeschlecht[0]++; break;
+                    // männlich + 1
+                    case 2: anzahlGeschlecht[1]++; break;
+                    // divers + 1
+                    case 3: anzahlGeschlecht[2]++; break;
+                }
+
+                // Variante 2: Geschlecht in einen Index umwandeln und direkt
+                // ins array schreiben
+                //anzahlGeschlecht[kontakt.Geschlecht - 1]++;
+            }
+
+            return anzahlGeschlecht;
+        }
+
+        public void DrawStatistikGeschlecht(Canvas canvas)
+        {
+            // Canvas löschen
+            canvas.Children.Clear();
+
+            // Geschlechterstatistik berechnen: [5, 10, 9] (w, m, d)
+            int[] anzahlGeschlecht = StatistikGeschlecht();
+            Brush[] farben = new Brush[3] {
+                Brushes.Pink, Brushes.LightBlue, Brushes.LightGreen
+            };
+
+            double offsetX = 10;
+            double offsetY = 10;
+            double breite = 80;
+
+            double hoeheMax = canvas.ActualHeight - 2 * offsetY;
+
+            double anzahlMax = anzahlGeschlecht.Max();
+
+            double posX = offsetX;
+            for (int i = 0; i < anzahlGeschlecht.Length; i++)
+            {
+                double hoeheBalken = anzahlGeschlecht[i] / anzahlMax * hoeheMax;
+                double posY = canvas.ActualHeight - offsetY - hoeheBalken;
+
+                // Rechteck erzeugen
+                Rectangle balken = new Rectangle()
+                {
+                    Width = breite,
+                    Height = hoeheBalken,
+                    Fill = farben[i]
+                };
+
+                // Rechteck platzieren
+                Canvas.SetTop(balken, posY);
+                Canvas.SetLeft(balken, posX);
+
+                // Elment in den Canvas einfügen
+                canvas.Children.Add(balken);
+
+                // x-Position anpassen
+                posX += breite + 5; // Breite + kleiner offset, damit balken nicht aufeinanderpicken
+            }
+
+
+        }
+
+        public double StatistikAlterMittelwert()
+        {
+            // Divison durch 0 vermeiden!
+            if (Kontakte.Count == 0)
+                return 0;
+
+            double summe = 0;
+
+            foreach (Kontakt kontakt in Kontakte)
+            {
+                summe += kontakt.Alter;
+            }
+
+            return summe / Kontakte.Count;
         }
 
         public void UpdateListView(ListView listView)

@@ -27,9 +27,29 @@ namespace KontaktApp
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             Laden();
         }
+
+        public void UpdateStatistik()
+        {
+            int[] anzahlGeschlecht = kontaktliste.StatistikGeschlecht();
+
+            string statistikText = $"Statistik:\n" +
+                $"Alterdurchschnitt: {kontaktliste.StatistikAlterMittelwert():F2}\n" +
+                $"Anzahl Weiblich: {anzahlGeschlecht[0]}\n" +
+                $"Anzahl Männlich: {anzahlGeschlecht[1]}\n" +
+                $"Anzahl Divers:   {anzahlGeschlecht[2]}";
+
+            LabelStatistik.Content = statistikText;
+
+            // Grafische Anzeige ebenfalls aktualisieren
+            kontaktliste.DrawStatistikGeschlecht(CanvasDraw);
+        }
+
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -49,6 +69,7 @@ namespace KontaktApp
                 kontaktliste.Add(kontakt);
                 // UpdateListView
                 kontaktliste.UpdateListView(ListViewKontakte);
+                UpdateStatistik();
             }
         }
 
@@ -79,6 +100,7 @@ namespace KontaktApp
 
                 // UpdateListView
                 kontaktliste.UpdateListView(ListViewKontakte);
+                UpdateStatistik();
             }
 
         }
@@ -93,6 +115,7 @@ namespace KontaktApp
 
             kontaktliste.Remove(ListViewKontakte.SelectedIndex);
             kontaktliste.UpdateListView(ListViewKontakte);
+            UpdateStatistik();
         }
 
 
@@ -132,6 +155,7 @@ namespace KontaktApp
                 // Laden der Daten aus einer Datei
                 kontaktliste.Laden(PFAD);
                 kontaktliste.UpdateListView(ListViewKontakte);
+                UpdateStatistik();
             }
             catch (Exception ex)
             {
@@ -145,5 +169,7 @@ namespace KontaktApp
         {
             Laden();
         }
+
+
     }
 }
