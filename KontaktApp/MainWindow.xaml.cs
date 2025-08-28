@@ -1,4 +1,5 @@
 ﻿using KontaktLib;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,8 @@ namespace KontaktApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string PFAD = "kontakte.txt";
+
         // Collection Klasse die mehrere Kontakte für uns
         // verwaltet
         Kontaktliste kontaktliste = new Kontaktliste();
@@ -24,6 +27,8 @@ namespace KontaktApp
         public MainWindow()
         {
             InitializeComponent();
+
+            Laden();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -47,6 +52,38 @@ namespace KontaktApp
             }
         }
 
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListViewKontakte.SelectedIndex < 0)
+            {
+                MessageBox.Show("Bitte einen Kontakt auswählen.");
+                return;
+            }
+
+            // Selektierten Kontakt holen
+            int selektierterIndex = ListViewKontakte.SelectedIndex;
+            Kontakt selektierterKontakt = kontaktliste.Kontakte[selektierterIndex];
+
+            // Objekt des Fensters erstellen
+            WindowKontaktHinzufuegen window = new WindowKontaktHinzufuegen(selektierterKontakt);
+
+            // Fenster als Dialog öffnen => Hauptfenster kann nicht
+            // verwendet werden
+            if (window.ShowDialog() == true)
+            {
+                // Wenn OK gedrückt wurde, holen wir uns den
+                // Kontakt über das öffentliche Property "Kontakt"
+                // ab.
+                // Dieses Property haben WIR hinzugefügt.
+                kontaktliste.Kontakte[selektierterIndex] = window.Kontakt;
+
+                // UpdateListView
+                kontaktliste.UpdateListView(ListViewKontakte);
+            }
+
+        }
+
+
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
         {
             if (ListViewKontakte.SelectedIndex < 0)
@@ -57,6 +94,7 @@ namespace KontaktApp
             kontaktliste.Remove(ListViewKontakte.SelectedIndex);
             kontaktliste.UpdateListView(ListViewKontakte);
         }
+
 
         private void ButtonReferenz_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +108,42 @@ namespace KontaktApp
             Kontakt kontakt = kontaktliste.KontakteReadOnly[randIndex];
 
             kontaktliste.UpdateListView(ListViewKontakte);
+        }
+
+        private void ButtonSpeichern_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Speichern der Daten in die Datei
+                kontaktliste.Speichern(PFAD);
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Speichern:\n{ex.Message}", "Fehler", 
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+        }
+
+        private void Laden()
+        {
+            try
+            {
+                // Laden der Daten aus einer Datei
+                kontaktliste.Laden(PFAD);
+                kontaktliste.UpdateListView(ListViewKontakte);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Laden:\n{ex.Message}", "Fehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+        }
+
+        private void ButtonLaden_Click(object sender, RoutedEventArgs e)
+        {
+            Laden();
         }
     }
 }

@@ -27,6 +27,16 @@ namespace KontaktApp
             InitializeComponent();
         }
 
+        public WindowKontaktHinzufuegen(Kontakt kontakt)
+        {
+            InitializeComponent();
+
+            this.Kontakt = kontakt;
+            TextBoxName.Text = Kontakt.Name;
+            DatePickerGeburtstag.SelectedDate = Kontakt.Geburtsdatum;
+            ComboBoxGeschlecht.SelectedIndex = Kontakt.Geschlecht - 1;
+        }
+
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             string name = TextBoxName.Text.Trim();

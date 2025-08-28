@@ -3,6 +3,8 @@ namespace KontaktLib
 {
     public class Kontakt
     {
+        private const string SEP = "*"; 
+
         #region Properties
 
         /*
@@ -172,6 +174,25 @@ namespace KontaktLib
 
             return geschlechtText;
         }
+
+        public string Serialize()
+        {
+            return $"{Name}{SEP}{Geburtsdatum}{SEP}{Geschlecht}";
+        }
+
+        public static Kontakt Deserialize(string data)
+        {
+            string[] splitData = data.Split(SEP);
+
+            Kontakt kontakt = new Kontakt(
+                splitData[0],                       // Name
+                Convert.ToDateTime(splitData[1]),   // Geburtsdatum
+                Convert.ToInt32(splitData[2])       // Geschlecht als Zahl
+            );
+
+            return kontakt;
+        }
+
 
         public override string ToString()
         {
